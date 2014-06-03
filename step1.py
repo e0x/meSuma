@@ -36,6 +36,6 @@ def search_exchange():
 	
 
 if __name__ == '__main__':
-setup_db()
-search_exchange()
+    setup_db()
+    search_exchange()
 
