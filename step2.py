@@ -3,6 +3,10 @@ import sys
 
 
 def get_data(arg):
+	"""
+	this function wait a RNC how argument and use it 
+	to generate the url for the data request.
+	"""
         prefix = 'http://data.developers.do/api/v1/empresas/'
 	sufix  = '.json'
 	url = prefix + arg + sufix
