@@ -12,11 +12,17 @@ rtexch = Table('rates_exchanges', metadata,
 
 
 def setup_db():
+	"""
+	this function create the db
+	"""
 	rtexch.create()
 
 
 
 def save_to_db(currency, amount):
+	"""
+	this function save the currency and amount to the db
+	"""
 	try:
 	    i = rtexch.insert()
 	    i.execute(currency=currency, amount=amount)
@@ -27,15 +33,17 @@ def save_to_db(currency, amount):
 
 
 def search_exchange():
+	"""
+	this function search for the rate exchanges values and return it
+	"""
 	dolar = soup.find("div", {"class": "dolar"})
 	for li in dolar.findAll('li'):
 		currency, amount = li.text.split('RD$')
-		save_to_db(currency, amount)
+		return (currency, amount)
 
 
 	
 
 if __name__ == '__main__':
     setup_db()
-    search_exchange()
-
+    save_to_db(*search_exchange())
