@@ -1,6 +1,7 @@
 import requests
 from BeautifulSoup import BeautifulSoup
 from sqlalchemy import *
+from sqlalchemy import exc
 url= 'http://www.elcaribe.com.do/'
 soup = BeautifulSoup(requests.get(url).text)
 
@@ -15,7 +16,10 @@ def setup_db():
 	"""
 	this function create the db
 	"""
-	rtexch.create()
+	try:
+		rtexch.create()
+	except exc.OperationalError:
+		print "db already exist"
 
 
 
@@ -26,7 +30,8 @@ def save_to_db(currency, amount):
 	try:
 	    i = rtexch.insert()
 	    i.execute(currency=currency, amount=amount)
-	except IntegrityError:
+	except exc.IntegrityError:
+		print "registre already exist, updating it...."
 		u = rtexch.update().where(rtexch.c.currency==currency).values(amount=amount)
 		u.execute()
 
